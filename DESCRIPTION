@@ -1,0 +1,11 @@
+Package: wbanalysis
+Title: Analysis of "The World Bank" data
+Version: 1.0.0.0
+Author: Sergio Picascia
+Maintainer: Sergio Picascia <sergio.picascia@studenti.unimi.it>
+Description: Easy way to quickly analyze World Bank datasets and generate a tidy dataframe.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Depends: WDI, farver, tidyverse
