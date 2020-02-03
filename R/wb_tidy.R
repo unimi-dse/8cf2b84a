@@ -1,6 +1,6 @@
-#' wb_analysis: World Bank Data Analysis
+#' wb_tidy: tidy World Bank dataset
 #'
-#' Returns a data frame of the chosen indicators for the selected countries; displays plots for each indicator and prints a correlation matrix in case of two or more indicators.
+#' Returns a data frame of the chosen indicators for the selected countries.
 #'
 #' @param countries Vector of strings. It must include the ISO Alpha-2 code of the countries of interest.
 #' @param indicators Vector of strings. It must include the ID of the indicators from "The World Bank" datasets.
@@ -21,15 +21,13 @@
 #'     \item \code{indicators}
 #' }
 #'
-#' It also prints plots for each indicators and, if there are more than one, the correlation matrix.
-#'
 #' @examples
-#' wb_analysis(countries = "IT", indicators = c("NY.GDP.MKTP.CD", "SP.DYN.LE00.IN"))
+#' wb_tidy(countries = "IT", indicators = "NY.GDP.MKTP.CD")
 #'
-#' wb_analysis(countries = c("US", "CN", "RU"), indicators = c("SP.POP.TOTL", "SL.TLF.TOTL.IN", "NY.GDP.PCAP.CD"))
+#' wb_tidy(countries = c("US", "CN", "RU"), indicators = c("SP.POP.TOTL", "SL.TLF.TOTL.IN", "NY.GDP.PCAP.CD"))
 #'
 #' @export
-wb_analysis <- function(countries, indicators) {
+wb_tidy <- function(countries, indicators) {
 
  # Creating the dataset
  dataset <- as_tibble(WDI(country = countries, indicator = indicators))
@@ -56,25 +54,8 @@ wb_analysis <- function(countries, indicators) {
 
  # Assining names to columns
  names(dataset) <- col_vect
-
- # Computing correlations
- if (length(indicators) > 1) {
-  for (c in countries) {
-   country_data <- dataset %>% filter(.[[1]] == c)
-   print(c)
-   print(cor(country_data[, -c(1, 2, 3)], use = "complete.obs"))
-  }
- }
-
- # Plotting
- index <- 4
- for (i in indicators) {
-  show(dataset %>%
-        ggplot(aes(.[[3]], .[[index]], col = .[[1]])) +
-        geom_line() +
-        labs(x = col_vect[3], y = col_vect[index], colour = col_vect[2]))
-  index <- index + 1
- }
+ dataset$Country <- as.factor(dataset$Country)
+ dataset$`ISO-2` <- as.factor(dataset$`ISO-2`)
 
  dataset
 }
