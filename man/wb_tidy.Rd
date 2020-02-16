@@ -24,7 +24,7 @@ This function returns a \code{data.frame} including columns:
 Returns a data frame of the chosen indicators for the selected countries.
 }
 \examples{
-wb_tidy(countries = "IT", indicators = c("NY.GDP.MKTP.CD", "SP.DYN.LE00.IN"))
+wb_tidy(countries = "IT", indicators = "NY.GDP.MKTP.CD")
 
 wb_tidy(countries = c("US", "CN", "RU"), indicators = c("SP.POP.TOTL", "SL.TLF.TOTL.IN", "NY.GDP.PCAP.CD"))
 
